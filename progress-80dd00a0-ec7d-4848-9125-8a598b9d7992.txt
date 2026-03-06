@@ -1,0 +1,21 @@
+=== US-001: Project setup with design tokens and chess board foundation ===
+COMPLETED: 2026-03-06T05:47:00+03:00
+FILES CHANGED:
+  - app/globals.css (updated with design tokens import)
+  - app/layout.tsx (updated with Space Grotesk + DM Sans fonts)
+  - app/page.tsx (updated with ChessBoard component)
+  - components/ChessBoard.tsx (new)
+  - .env.example (new)
+  - package.json (added typecheck script)
+
+KEY DECISIONS:
+  - Imported design tokens directly from stitch/design-tokens.css using @import
+  - Used next/font for optimal Google Fonts loading
+  - Created reusable ChessBoard component with TypeScript
+  - Used Unicode chess pieces for simplicity (SVG can be added later)
+  - Made board responsive using max-width and aspect-ratio
+
+DEPENDENCIES ADDED: None (used existing dependencies)
+
+PR: https://github.com/hikmetgulsesli/chess-ai/pull/1
+BRANCH: 80dd00a0-US-001
