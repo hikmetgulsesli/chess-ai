@@ -4,13 +4,8 @@ import React from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 
-// Import all piece SVGs
-import { WhiteKing, BlackKing } from "./pieces/King";
-import { WhiteQueen, BlackQueen } from "./pieces/Queen";
-import { WhiteRook, BlackRook } from "./pieces/Rook";
-import { WhiteBishop, BlackBishop } from "./pieces/Bishop";
-import { WhiteKnight, BlackKnight } from "./pieces/Knight";
-import { WhitePawn, BlackPawn } from "./pieces/Pawn";
+// Import all piece SVGs from the pieces barrel file
+import { WhiteKing, BlackKing, WhiteQueen, BlackQueen, WhiteRook, BlackRook, WhiteBishop, BlackBishop, WhiteKnight, BlackKnight, WhitePawn, BlackPawn } from "./pieces";
 
 export type PieceType = "king" | "queen" | "rook" | "bishop" | "knight" | "pawn";
 export type PieceColor = "white" | "black";
@@ -66,13 +61,12 @@ export function Piece({ type, color, square, className = "", disabled = false }:
         cursor: disabled ? "default" : "grab",
         opacity: isDragging ? 0.5 : 1,
         transform: isDragging ? `${style?.transform || ""} scale(1.1)` : style?.transform,
-        transition: "opacity 0.15s ease, transform 0.15s ease",
+        transition: "opacity 0.15s ease, filter 0.15s ease",
         filter: isDragging ? "drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4))" : "none",
       }}
       className={`
         w-full h-full flex items-center justify-center
         hover:scale-105 transition-transform duration-150
-        ${isDragging ? "scale-110" : ""}
         ${className}
       `}
       {...listeners}

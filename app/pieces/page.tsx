@@ -51,7 +51,7 @@ export default function PiecesPage() {
             {pieces.map(({ name, White }) => (
               <div 
                 key={name} 
-                className="flex flex-col items-center gap-3 p-4 bg-[var(--chess-black-square)] rounded-lg hover:bg-[#85a866] transition-colors"
+                className="flex flex-col items-center gap-3 p-4 bg-[var(--chess-black-square)] rounded-lg hover:bg-[var(--chess-hover-square,#85a866)] transition-colors"
               >
                 <div className="w-16 h-16 text-[var(--chess-white-piece)] hover:scale-110 transition-transform cursor-pointer">
                   <White className="w-full h-full drop-shadow-md" />
