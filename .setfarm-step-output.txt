@@ -1,0 +1,5 @@
+STATUS: done
+STORY_BRANCH: 80dd00a0-US-003
+PR_URL: https://github.com/hikmetgulsesli/chess-ai/pull/3
+CHANGES: Implemented chess.js integration with GameState context/provider for state management. Created ChessBoard component with drag-and-drop and click-to-move functionality. Added move validation using chess.js - only legal moves are accepted. Created supporting components: ChessPiece, MoveHistory, GameControls, TurnIndicator. Updated main page with full game UI following Stitch design system.
+TESTS: No test runner configured in project
