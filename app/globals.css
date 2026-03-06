@@ -345,7 +345,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   border: 1px solid transparent;
 }
 
@@ -372,7 +372,8 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #2ea043;
+  background: var(--color-accent-green);
+  filter: brightness(1.2);
 }
 
 .btn-danger {
@@ -382,7 +383,8 @@
 }
 
 .btn-danger:hover:not(:disabled) {
-  background: #f85149;
+  background: var(--color-accent-red);
+  filter: brightness(1.2);
 }
 
 /* Difficulty Selector */
@@ -401,7 +403,7 @@
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .difficulty-btn:hover {
