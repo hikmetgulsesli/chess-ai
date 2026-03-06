@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, useMemo } from "react";
+import React, { createContext, useContext, useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { Chess, type Square } from "chess.js";
 
 export type GameStatus = "playing" | "check" | "checkmate" | "stalemate" | "draw";
@@ -11,6 +11,7 @@ export interface Move {
   promotion?: string;
   san: string;
   flags?: string;
+  captured?: string;
 }
 
 export interface PendingPromotion {
@@ -25,6 +26,13 @@ export interface CastlingRights {
   blackKingside: boolean;
   blackQueenside: boolean;
 }
+
+export interface CapturedPiece {
+  type: string;
+  color: "w" | "b";
+}
+
+export type SoundType = "move" | "capture" | "check" | "checkmate" | "castle" | "promotion";
 
 export interface GameState {
   // Chess.js instance (internal)
@@ -60,6 +68,12 @@ export interface GameState {
     castling: { to: string; side: "kingside" | "queenside" }[];
     enPassant: { to: string; captureSquare: string }[];
   };
+  // Captured pieces
+  capturedPieces: CapturedPiece[];
+  // Sound enabled state
+  soundEnabled: boolean;
+  // Last move for animation
+  lastMove: { from: string; to: string } | null;
 }
 
 export interface GameActions {
@@ -83,6 +97,10 @@ export interface GameActions {
   completePromotion: (piece: "q" | "r" | "b" | "n") => boolean;
   // Cancel pending promotion
   cancelPromotion: () => void;
+  // Toggle sound
+  toggleSound: () => void;
+  // Play sound effect
+  playSound: (type: SoundType) => void;
 }
 
 const GameStateContext = createContext<(GameState & GameActions) | null>(null);
@@ -100,12 +118,89 @@ interface GameStateProviderProps {
   initialFen?: string;
 }
 
+// Sound synthesis using Web Audio API
+function useSoundEffects() {
+  const audioContextRef = useRef<AudioContext | null>(null);
+
+  const initAudio = useCallback(() => {
+    if (!audioContextRef.current) {
+      audioContextRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+    }
+  }, []);
+
+  const playTone = useCallback((frequency: number, duration: number, type: OscillatorType = "sine", volume = 0.3) => {
+    if (!audioContextRef.current) return;
+    
+    const oscillator = audioContextRef.current.createOscillator();
+    const gainNode = audioContextRef.current.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContextRef.current.destination);
+    
+    oscillator.frequency.value = frequency;
+    oscillator.type = type;
+    
+    gainNode.gain.setValueAtTime(volume, audioContextRef.current.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContextRef.current.currentTime + duration);
+    
+    oscillator.start(audioContextRef.current.currentTime);
+    oscillator.stop(audioContextRef.current.currentTime + duration);
+  }, []);
+
+  const playSound = useCallback((soundType: SoundType) => {
+    initAudio();
+    if (audioContextRef.current?.state === "suspended") {
+      audioContextRef.current.resume();
+    }
+
+    switch (soundType) {
+      case "move":
+        // Soft click sound
+        playTone(800, 0.1, "sine", 0.2);
+        break;
+      case "capture":
+        // Short buzz for capture
+        playTone(200, 0.15, "sawtooth", 0.25);
+        setTimeout(() => playTone(150, 0.1, "sawtooth", 0.2), 50);
+        break;
+      case "check":
+        // Warning tone
+        playTone(600, 0.1, "square", 0.3);
+        setTimeout(() => playTone(800, 0.2, "square", 0.3), 100);
+        break;
+      case "checkmate":
+        // Victory fanfare
+        playTone(523.25, 0.2, "sine", 0.4); // C5
+        setTimeout(() => playTone(659.25, 0.2, "sine", 0.4), 200); // E5
+        setTimeout(() => playTone(783.99, 0.4, "sine", 0.4), 400); // G5
+        break;
+      case "castle":
+        // Two quick tones for castling
+        playTone(400, 0.08, "sine", 0.2);
+        setTimeout(() => playTone(500, 0.08, "sine", 0.2), 80);
+        break;
+      case "promotion":
+        // Rising tone for promotion
+        playTone(600, 0.1, "sine", 0.25);
+        setTimeout(() => playTone(800, 0.1, "sine", 0.3), 100);
+        setTimeout(() => playTone(1000, 0.2, "sine", 0.35), 200);
+        break;
+    }
+  }, [initAudio, playTone]);
+
+  return { playSound, initAudio };
+}
+
 export function GameStateProvider({ children, initialFen }: GameStateProviderProps) {
   // Initialize chess.js instance
   const [chess, setChess] = useState(() => new Chess(initialFen));
   const [selectedSquare, setSelectedSquare] = useState<string | null>(null);
   const [validMoves, setValidMoves] = useState<string[]>([]);
   const [pendingPromotion, setPendingPromotion] = useState<PendingPromotion | null>(null);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [lastMove, setLastMove] = useState<{ from: string; to: string } | null>(null);
+
+  const { playSound } = useSoundEffects();
 
   // Get board state as 2D array
   const board = useMemo(() => {
@@ -124,7 +219,7 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
     return "playing";
   }, [chess]);
 
-  // Get move history
+  // Get move history with captured pieces
   const history = useMemo(() => {
     const moves = chess.history({ verbose: true });
     return moves.map((move) => ({
@@ -133,8 +228,49 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
       promotion: move.promotion,
       san: move.san,
       flags: move.flags,
+      captured: move.captured,
     }));
   }, [chess]);
+
+  // Derive captured pieces from history (computed, not state)
+  const capturedPieces = useMemo(() => {
+    const captured: CapturedPiece[] = [];
+    for (const move of history) {
+      if (move.captured) {
+        // The captured piece is the opposite color of the mover
+        const capturedColor = move.san.includes("x") && move.from ? 
+          (chess.get(move.from as Square)?.color === "w" ? "b" : "w") : 
+          (move.san.startsWith(move.san.toLowerCase()) ? "w" : "b");
+        captured.push({
+          type: move.captured,
+          color: capturedColor === "w" ? "b" : "w", // Opposite of the capturing piece
+        });
+      }
+    }
+    return captured;
+  }, [history, chess]);
+
+  // Play sound effects based on game state changes
+  useEffect(() => {
+    if (!soundEnabled) return;
+    
+    const lastMoveData = history[history.length - 1];
+    if (!lastMoveData) return;
+
+    if (chess.isCheckmate()) {
+      playSound("checkmate");
+    } else if (chess.isCheck()) {
+      playSound("check");
+    } else if (lastMoveData.flags?.includes("k") || lastMoveData.flags?.includes("q")) {
+      playSound("castle");
+    } else if (lastMoveData.promotion) {
+      playSound("promotion");
+    } else if (lastMoveData.captured) {
+      playSound("capture");
+    } else {
+      playSound("move");
+    }
+  }, [history.length, soundEnabled, playSound, chess, history]);
 
   // Get en passant target from FEN
   const enPassantTarget = useMemo(() => {
@@ -244,6 +380,7 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
           setSelectedSquare(null);
           setValidMoves([]);
           setPendingPromotion(null);
+          setLastMove({ from, to });
           return true;
         }
         return false;
@@ -271,6 +408,7 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
           setPendingPromotion(null);
           setSelectedSquare(null);
           setValidMoves([]);
+          setLastMove({ from: pendingPromotion.from, to: pendingPromotion.to });
           return true;
         }
         return false;
@@ -350,12 +488,14 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
       setSelectedSquare(null);
       setValidMoves([]);
       setPendingPromotion(null);
+      // Captured pieces are automatically recomputed from history
       return {
         from: undone.from,
         to: undone.to,
         promotion: undone.promotion,
         san: undone.san,
         flags: undone.flags,
+        captured: undone.captured,
       };
     }
     return null;
@@ -367,6 +507,7 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
     setSelectedSquare(null);
     setValidMoves([]);
     setPendingPromotion(null);
+    setLastMove(null);
   }, []);
 
   // Load FEN
@@ -377,6 +518,7 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
       setSelectedSquare(null);
       setValidMoves([]);
       setPendingPromotion(null);
+      setLastMove(null);
       return true;
     } catch {
       return false;
@@ -387,6 +529,11 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
   const getFen = useCallback((): string => {
     return chess.fen();
   }, [chess]);
+
+  // Toggle sound
+  const toggleSound = useCallback(() => {
+    setSoundEnabled(prev => !prev);
+  }, []);
 
   const value: GameState & GameActions = {
     chess,
@@ -404,6 +551,9 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
     enPassantTarget,
     castlingRights,
     specialMoves,
+    capturedPieces,
+    soundEnabled,
+    lastMove,
     makeMove,
     selectSquare,
     getValidMoves,
@@ -414,6 +564,8 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
     isLegalMove,
     completePromotion,
     cancelPromotion,
+    toggleSound,
+    playSound,
   };
 
   return <GameStateContext.Provider value={value}>{children}</GameStateContext.Provider>;
