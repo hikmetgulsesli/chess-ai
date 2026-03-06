@@ -45,6 +45,10 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
     selectSquare,
     makeMove,
     isCheck,
+    isGameOver,
+    specialMoves,
+    enPassantTarget,
+    castlingRights,
   } = useGameState();
 
   const [activePiece, setActivePiece] = useState<ActivePiece | null>(null);
@@ -61,6 +65,8 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
 
   const handleDragStart = useCallback(
     (event: DragStartEvent) => {
+      if (isGameOver) return;
+      
       const square = event.active.id.toString().replace("piece-", "");
       const { row, col } = fromAlgebraic(square);
       const piece = board[row]?.[col];
@@ -70,13 +76,18 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
         selectSquare(square);
       }
     },
-    [board, turn, selectSquare]
+    [board, turn, selectSquare, isGameOver]
   );
 
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       const { active, over } = event;
       setActivePiece(null);
+
+      if (isGameOver) {
+        selectSquare(null);
+        return;
+      }
 
       if (!over) {
         selectSquare(null);
@@ -97,21 +108,49 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
         setTimeout(() => setIllegalMoveTarget(null), 300);
       }
     },
-    [makeMove, selectSquare]
+    [makeMove, selectSquare, isGameOver]
   );
 
   const handleSquareClick = useCallback(
     (row: number, col: number) => {
+      if (isGameOver) return;
+      
       const square = toAlgebraic(row, col);
       selectSquare(square);
     },
-    [selectSquare]
+    [selectSquare, isGameOver]
   );
 
   const isLightSquare = (row: number, col: number): boolean => (row + col) % 2 === 0;
   const isSelected = (row: number, col: number): boolean => selectedSquare === toAlgebraic(row, col);
   const isValidMoveTarget = (row: number, col: number): boolean => validMoves.includes(toAlgebraic(row, col));
   const isIllegalMove = (row: number, col: number): boolean => illegalMoveTarget === toAlgebraic(row, col);
+
+  // Check if a square is a castling destination
+  const isCastlingTarget = useCallback((square: string): { isCastling: boolean; side?: "kingside" | "queenside" } => {
+    const castlingMove = specialMoves.castling.find(m => m.to === square);
+    if (castlingMove) {
+      return { isCastling: true, side: castlingMove.side };
+    }
+    return { isCastling: false };
+  }, [specialMoves.castling]);
+
+  // Check if a square is an en passant target
+  const isEnPassantTarget = useCallback((square: string): boolean => {
+    return specialMoves.enPassant.some(m => m.to === square);
+  }, [specialMoves.enPassant]);
+
+  // Check if there's a king that can castle from current position
+  const canCastleFromSquare = useCallback((square: string): { kingside: boolean; queenside: boolean } => {
+    const piece = board[8 - parseInt(square[1])]?.[square.charCodeAt(0) - 97];
+    if (!piece || piece.type !== "k") return { kingside: false, queenside: false };
+    
+    const isWhite = piece.color === "w";
+    return {
+      kingside: isWhite ? castlingRights.whiteKingside : castlingRights.blackKingside,
+      queenside: isWhite ? castlingRights.whiteQueenside : castlingRights.blackQueenside,
+    };
+  }, [board, castlingRights]);
 
   const getKingSquare = (): string | null => {
     if (!isCheck) return null;
@@ -136,7 +175,7 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
         onDragEnd={handleDragEnd}
       >
         <div
-          className="grid grid-cols-8 border-4 border-[var(--color-border-default)] rounded overflow-hidden"
+          className="grid grid-cols-8 border-4 border-[var(--color-border-default)] rounded overflow-hidden relative"
           style={{ aspectRatio: "1" }}
         >
           {board.map((row, rowIndex) =>
@@ -147,6 +186,11 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
               const illegalMove = isIllegalMove(rowIndex, colIndex);
               const square = toAlgebraic(rowIndex, colIndex);
               const isKingInCheck = kingSquare === square;
+              const castlingInfo = isCastlingTarget(square);
+              const isEnPassant = isEnPassantTarget(square);
+              const castleFrom = selectedSquare ? canCastleFromSquare(selectedSquare) : { kingside: false, queenside: false };
+              const isKingSquare = piece?.type === "k" && piece?.color === turn;
+              const showCastlingIndicator = isKingSquare && selectedSquare === square && (castleFrom.kingside || castleFrom.queenside);
 
               return (
                 <div
@@ -170,12 +214,55 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
                     }
                   }}
                 >
-                  {validMove && !piece && (
+                  {/* Regular valid move indicator */}
+                  {validMove && !piece && !castlingInfo.isCastling && !isEnPassant && (
                     <div className="absolute w-1/4 h-1/4 rounded-full bg-[var(--color-accent-blue)]/50" />
                   )}
-                  {validMove && piece && (
+                  
+                  {/* Castling indicator */}
+                  {castlingInfo.isCastling && (
+                    <div className="absolute flex flex-col items-center justify-center">
+                      <div className="w-1/3 h-1/3 rounded-full bg-[var(--color-accent-purple)]/70" />
+                      <span className="text-[8px] font-bold text-[var(--color-accent-purple)] mt-0.5">
+                        {castlingInfo.side === "kingside" ? "O-O" : "O-O-O"}
+                      </span>
+                    </div>
+                  )}
+                  
+                  {/* En passant indicator */}
+                  {isEnPassant && (
+                    <div className="absolute flex flex-col items-center justify-center">
+                      <div className="w-1/3 h-1/3 rounded-full bg-[var(--color-accent-green)]/70 border-2 border-[var(--color-accent-green)]" />
+                      <span className="text-[7px] font-bold text-[var(--color-accent-green)] mt-0.5">e.p.</span>
+                    </div>
+                  )}
+                  
+                  {/* Capture indicator (valid move with piece) */}
+                  {validMove && piece && !castlingInfo.isCastling && (
                     <div className="absolute inset-0 border-4 border-[var(--color-accent-blue)]/50 rounded-full" />
                   )}
+
+                  {/* Castling availability indicator on king */}
+                  {showCastlingIndicator && (
+                    <div className="absolute -top-1 -right-1 flex gap-0.5">
+                      {castleFrom.kingside && (
+                        <div className="w-3 h-3 rounded-full bg-[var(--color-accent-purple)]/80 flex items-center justify-center" title="Kingside castling available">
+                          <span className="text-[6px] text-white font-bold">K</span>
+                        </div>
+                      )}
+                      {castleFrom.queenside && (
+                        <div className="w-3 h-3 rounded-full bg-[var(--color-accent-purple)]/80 flex items-center justify-center" title="Queenside castling available">
+                          <span className="text-[6px] text-white font-bold">Q</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* En passant target indicator */}
+                  {enPassantTarget === square && !validMove && (
+                    <div className="absolute top-0.5 left-0.5 w-2 h-2 rounded-full bg-[var(--color-accent-green)]/50" title="En passant target" />
+                  )}
+
                   {piece && (
                     <ChessPiece
                       type={piece.type}

@@ -6,6 +6,7 @@ import { ChessBoard } from "@/components/ChessBoard";
 import { MoveHistory } from "@/components/MoveHistory";
 import { GameControls } from "@/components/GameControls";
 import { TurnIndicator } from "@/components/TurnIndicator";
+import { PromotionDialog } from "@/components/PromotionDialog";
 
 function Header() {
   const { history, turn } = useGameState();
@@ -90,6 +91,9 @@ function GameContent() {
   return (
     <>
       <Header />
+      
+      {/* Promotion Dialog */}
+      <PromotionDialog />
       
       <div className="main-container">
         {/* Board Section */}

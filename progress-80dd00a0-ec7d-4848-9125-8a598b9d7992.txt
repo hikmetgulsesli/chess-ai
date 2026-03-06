@@ -1,0 +1,43 @@
+=== US-004: AI opponent with minimax algorithm and difficulty levels ===
+COMPLETED: 2026-03-06T07:55:00+03:00
+FILES CHANGED:
+  - lib/ai-engine.ts (new - AI engine with minimax and evaluation)
+  - components/AISelector.tsx (new - game mode and difficulty selector)
+  - app/page.tsx (updated - AI integration)
+
+KEY DECISIONS:
+  - Used chess.js for game logic as it was already integrated in the project
+  - Implemented minimax algorithm with alpha-beta pruning for efficiency
+  - Created position evaluation tables for each piece type
+  - Three difficulty levels with different search depths
+  - AI runs asynchronously with thinking indicator for better UX
+  - Game mode toggle allows switching between PvP and PvAI
+
+DEPENDENCIES ADDED: None (used existing chess.js dependency)
+
+PR: https://github.com/hikmetgulsesli/chess-ai/pull/4
+BRANCH: 80dd00a0-US-004
+
+=== US-005: Move history with algebraic notation and undo functionality ===
+COMPLETED: 2026-03-06T08:06:00+03:00
+FILES CHANGED:
+  - components/MoveHistory.tsx (updated - auto-scroll, two-column layout)
+  - components/GameControls.tsx (updated - game mode aware undo)
+  - components/GameOverModal.tsx (new - game over modal)
+  - components/PromotionDialog.tsx (new - pawn promotion dialog)
+  - app/page.tsx (updated - game mode selector integration)
+  - eslint.config.mjs (updated - added dist/** ignore)
+
+KEY DECISIONS:
+  - Move history uses chess.js SAN (Standard Algebraic Notation)
+  - Two-column layout shows white moves on left, black on right
+  - Auto-scroll keeps view at latest moves
+  - Undo in PvA mode reverts both player and AI moves
+  - Undo button disabled when insufficient moves or game over
+  - New Game button uses existing resetGame() function
+  - Game mode selector allows switching between PvP and PvA
+
+DEPENDENCIES ADDED: None
+
+PR: https://github.com/hikmetgulsesli/chess-ai/pull/6
+BRANCH: 80dd00a0-US-005-v2
