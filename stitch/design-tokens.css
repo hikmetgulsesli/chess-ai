@@ -1,0 +1,50 @@
+:root {
+  /* DevTool / CLI Dashboard Color Palette */
+  --color-bg-primary: #0d1117;
+  --color-bg-secondary: #161b22;
+  --color-bg-tertiary: #21262d;
+  --color-bg-elevated: #30363d;
+  
+  --color-border-default: #30363d;
+  --color-border-muted: #21262d;
+  --color-border-accent: #58a6ff;
+  
+  --color-text-primary: #f0f6fc;
+  --color-text-secondary: #8b949e;
+  --color-text-muted: #6e7681;
+  --color-text-accent: #58a6ff;
+  
+  --color-accent-blue: #58a6ff;
+  --color-accent-green: #238636;
+  --color-accent-yellow: #d29922;
+  --color-accent-red: #da3633;
+  --color-accent-purple: #8957e5;
+  
+  /* Chess Board Colors */
+  --chess-white-square: #e8e8e8;
+  --chess-black-square: #769656;
+  --chess-white-piece: #f0f6fc;
+  --chess-black-piece: #161b22;
+  
+  /* Typography */
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
