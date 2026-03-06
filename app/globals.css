@@ -6,72 +6,438 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--color-bg-primary);
-  --color-foreground: var(--color-text-primary);
-  --font-sans: var(--font-body);
-  --font-heading: var(--font-heading);
-  --color-border: var(--color-border-default);
-  --color-border-muted: var(--color-border-muted);
-  --color-border-accent: var(--color-border-accent);
-  --color-text-primary: var(--color-text-primary);
-  --color-text-secondary: var(--color-text-secondary);
-  --color-text-muted: var(--color-text-muted);
-  --color-text-accent: var(--color-text-accent);
-  --color-accent-blue: var(--color-accent-blue);
-  --color-accent-green: var(--color-accent-green);
-  --color-accent-yellow: var(--color-accent-yellow);
-  --color-accent-red: var(--color-accent-red);
-  --color-accent-purple: var(--color-accent-purple);
-  --color-chess-light: var(--chess-white-square);
-  --color-chess-dark: var(--chess-black-square);
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
 :root {
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  --radius: 0.625rem;
+  --background: var(--color-bg-primary);
+  --foreground: var(--color-text-primary);
+  --card: var(--color-bg-secondary);
+  --card-foreground: var(--color-text-primary);
+  --popover: var(--color-bg-secondary);
+  --popover-foreground: var(--color-text-primary);
+  --primary: var(--color-accent-blue);
+  --primary-foreground: var(--color-text-primary);
+  --secondary: var(--color-bg-tertiary);
+  --secondary-foreground: var(--color-text-primary);
+  --muted: var(--color-bg-tertiary);
+  --muted-foreground: var(--color-text-muted);
+  --accent: var(--color-bg-tertiary);
+  --accent-foreground: var(--color-text-primary);
+  --destructive: var(--color-accent-red);
+  --border: var(--color-border-default);
+  --input: var(--color-border-default);
+  --ring: var(--color-accent-blue);
+  --chart-1: var(--color-accent-blue);
+  --chart-2: var(--color-accent-green);
+  --chart-3: var(--color-accent-yellow);
+  --chart-4: var(--color-accent-purple);
+  --chart-5: var(--color-accent-red);
+  --sidebar: var(--color-bg-secondary);
+  --sidebar-foreground: var(--color-text-primary);
+  --sidebar-primary: var(--color-accent-blue);
+  --sidebar-primary-foreground: var(--color-text-primary);
+  --sidebar-accent: var(--color-bg-tertiary);
+  --sidebar-accent-foreground: var(--color-text-primary);
+  --sidebar-border: var(--color-border-default);
+  --sidebar-ring: var(--color-accent-blue);
 }
 
 @layer base {
   * {
-    @apply border-[var(--color-border-default)];
+    @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-[var(--color-bg-primary)] text-[var(--color-text-primary)];
-    font-family: var(--font-body);
+    @apply bg-background text-foreground;
+    font-family: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, sans-serif;
   }
 }
 
-/* Chess Board Styles */
-.chess-square {
-  aspect-ratio: 1;
+/* Chess Game Layout Styles */
+
+.header {
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border-default);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-purple));
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.2rem;
+}
+
+.game-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.game-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.status-badge {
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-default);
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  color: var(--color-text-secondary);
+}
+
+.status-badge.active {
+  background: rgba(88, 166, 255, 0.15);
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
+}
+
+/* Main Layout */
+.main-container {
+  flex: 1;
+  display: flex;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Board Section */
+.board-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.player-bar {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.player-avatar {
+  width: 36px;
+  height: 36px;
+  background: var(--color-bg-tertiary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.player-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+}
+
+.player-rating {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.player-timer {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  background: var(--color-bg-tertiary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-border-muted);
+}
+
+.player-timer.active {
+  background: rgba(88, 166, 255, 0.15);
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
+}
+
+/* Chess Board */
+.chess-board-container {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.panel {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.panel-header {
+  background: var(--color-bg-tertiary);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-title {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.panel-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-secondary);
+}
+
+.panel-content {
+  padding: 1rem;
+}
+
+/* Move History */
+.move-history {
+  max-height: 280px;
+  overflow-y: auto;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.8125rem;
+}
+
+.move-row {
+  display: flex;
+  gap: 1rem;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.move-row:last-child {
+  border-bottom: none;
+}
+
+.move-number {
+  color: var(--color-text-muted);
+  min-width: 24px;
+}
+
+.move-white,
+.move-black {
+  color: var(--color-text-primary);
+  min-width: 60px;
+  font-weight: 500;
+}
+
+/* Controls */
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
 }
 
-.chess-square.light {
-  background: var(--chess-white-square);
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.chess-square.dark {
-  background: var(--chess-black-square);
+.btn-secondary {
+  background: var(--color-bg-tertiary);
+  border-color: var(--color-border-default);
+  color: var(--color-text-primary);
 }
 
-.chess-square:hover {
-  filter: brightness(1.1);
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-border-muted);
 }
 
-.chess-square.selected {
-  box-shadow: inset 0 0 0 4px var(--color-accent-blue);
+.btn-primary {
+  background: var(--color-accent-green);
+  border-color: var(--color-accent-green);
+  color: white;
 }
 
-/* Scrollbar Styles */
+.btn-primary:hover:not(:disabled) {
+  background: #2ea043;
+}
+
+.btn-danger {
+  background: var(--color-accent-red);
+  border-color: var(--color-accent-red);
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #f85149;
+}
+
+/* Difficulty Selector */
+.difficulty-selector {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.difficulty-btn {
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-default);
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.difficulty-btn:hover {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+.difficulty-btn.active {
+  background: rgba(88, 166, 255, 0.15);
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
+}
+
+/* Game Status */
+.game-status {
+  background: linear-gradient(135deg, rgba(88, 166, 255, 0.1), rgba(137, 87, 229, 0.1));
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.game-status-title {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.game-status-message {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -89,4 +455,14 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-border-default);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .main-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+  }
 }
