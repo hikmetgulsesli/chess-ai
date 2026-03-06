@@ -488,14 +488,7 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
       setSelectedSquare(null);
       setValidMoves([]);
       setPendingPromotion(null);
-      // Remove captured piece if there was one
-      if (undone.captured) {
-        setCapturedPieces(prev => {
-          const newCaptured = [...prev];
-          newCaptured.pop();
-          return newCaptured;
-        });
-      }
+      // Captured pieces are automatically recomputed from history
       return {
         from: undone.from,
         to: undone.to,
@@ -514,7 +507,6 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
     setSelectedSquare(null);
     setValidMoves([]);
     setPendingPromotion(null);
-    setCapturedPieces([]);
     setLastMove(null);
   }, []);
 
@@ -526,7 +518,6 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
       setSelectedSquare(null);
       setValidMoves([]);
       setPendingPromotion(null);
-      setCapturedPieces([]);
       setLastMove(null);
       return true;
     } catch {

@@ -1,449 +1,737 @@
-<!DOCTYPE html><!--Q53JpBx7lSX6Azk6_g6UF--><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" href="/_next/static/media/0c89a48fa5027cee-s.p.4564287c.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" href="/_next/static/media/5c285b27cdda1fe8-s.p.a62025f2.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="stylesheet" href="/_next/static/chunks/f65b731b4138b261.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/49849b1b478e6b82.js"/><script src="/_next/static/chunks/f2f58a7e93290fbb.js" async=""></script><script src="/_next/static/chunks/454889a9dcbe1f52.js" async=""></script><script src="/_next/static/chunks/turbopack-530260eb4711dffb.js" async=""></script><script src="/_next/static/chunks/2f236954d6a65e12.js" async=""></script><script src="/_next/static/chunks/27dbd5d0fdcfc803.js" async=""></script><meta name="next-size-adjust" content=""/><title>Chess AI Game</title><meta name="description" content="Modern web-based chess with AI opponent"/><link rel="icon" href="/favicon.ico?favicon.0b3bf435.ico" sizes="256x256" type="image/x-icon"/><script src="/_next/static/chunks/a6dad97d9634a72d.js" noModule=""></script></head><body class="space_grotesk_1d8c5cc8-module__-5dOoa__variable dm_sans_81a33cc5-module___RQdfW__variable antialiased" style="font-family:var(--font-dm-sans), sans-serif"><div hidden=""><!--$--><!--/$--></div><div class="min-h-screen flex flex-col" style="background:var(--color-bg-primary)"><header class="bg-[var(--color-bg-secondary)] border-b border-[var(--color-border-default)] px-6 py-4 flex items-center justify-between"><div class="flex items-center gap-4"><div class="text-2xl font-bold text-[var(--color-text-primary)] flex items-center gap-2"><div class="w-8 h-8 bg-gradient-to-br from-[var(--color-accent-blue)] to-[var(--color-accent-purple)] rounded-md flex items-center justify-center text-lg">♟</div>Chess AI</div><div class="flex items-center gap-6 text-sm text-[var(--color-text-secondary)]"><div class="flex items-center gap-1"><span>Mode:</span><strong class="text-[var(--color-text-primary)] uppercase">pva</strong></div><div class="flex items-center gap-1"><span>Moves:</span><strong class="text-[var(--color-text-primary)]">0</strong></div></div></div><div class="px-3 py-1.5 rounded-md text-xs font-medium uppercase tracking-wide border bg-[rgba(88,166,255,0.15)] border-[var(--color-accent-blue)] text-[var(--color-accent-blue)]">Your Turn</div></header><div class="flex-1 flex p-6 gap-6 max-w-[1400px] mx-auto w-full"><div class="flex-1 flex flex-col gap-4"><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg px-4 py-3 flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-[var(--color-bg-tertiary)] rounded-full flex items-center justify-center text-xl">🤖</div><div class="flex flex-col"><span class="font-semibold text-sm text-[var(--color-text-primary)]">AI Opponent</span><span class="text-xs text-[var(--color-text-muted)]">Engine</span></div></div><div class="text-lg font-semibold px-4 py-2 rounded-md border bg-[var(--color-bg-tertiary)] border-[var(--color-border-muted)] text-[var(--color-text-primary)]">10:00</div></div><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-xl p-6 flex justify-center shadow-lg"><div class="w-full max-w-[560px] "><div class="grid grid-cols-8 border-4 border-[var(--color-border-default)] rounded overflow-hidden relative" style="aspect-ratio:1"><div id="square-a8" class="
+<!DOCTYPE html><!--bFsDVEMb0yR0pjhBsoi_2--><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" href="/_next/static/media/0c89a48fa5027cee-s.p.4564287c.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" href="/_next/static/media/5c285b27cdda1fe8-s.p.a62025f2.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="stylesheet" href="/_next/static/chunks/4864da998a70bdf8.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/49849b1b478e6b82.js"/><script src="/_next/static/chunks/f2f58a7e93290fbb.js" async=""></script><script src="/_next/static/chunks/454889a9dcbe1f52.js" async=""></script><script src="/_next/static/chunks/turbopack-530260eb4711dffb.js" async=""></script><script src="/_next/static/chunks/2f236954d6a65e12.js" async=""></script><script src="/_next/static/chunks/759e960d83a460f2.js" async=""></script><meta name="next-size-adjust" content=""/><title>Chess AI Game</title><meta name="description" content="Modern web-based chess with AI opponent"/><link rel="icon" href="/favicon.ico?favicon.0b3bf435.ico" sizes="256x256" type="image/x-icon"/><script src="/_next/static/chunks/a6dad97d9634a72d.js" noModule=""></script></head><body class="space_grotesk_1d8c5cc8-module__-5dOoa__variable dm_sans_81a33cc5-module___RQdfW__variable antialiased" style="font-family:var(--font-dm-sans), sans-serif"><div hidden=""><!--$--><!--/$--></div><div class="min-h-screen flex flex-col" style="background:var(--color-bg-primary)"><header class="bg-[var(--color-bg-secondary)] border-b border-[var(--color-border-default)] px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between"><div class="flex items-center gap-3 sm:gap-4"><div class="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)] flex items-center gap-2"><div class="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-[var(--color-accent-blue)] to-[var(--color-accent-purple)] rounded-md flex items-center justify-center text-base sm:text-lg">♟</div><span class="hidden sm:inline">Chess AI</span></div><div class="hidden sm:flex items-center gap-6 text-sm text-[var(--color-text-secondary)]"><div class="flex items-center gap-1"><span>Mode:</span><strong class="text-[var(--color-text-primary)] uppercase">pva</strong></div><div class="flex items-center gap-1"><span>Moves:</span><strong class="text-[var(--color-text-primary)]">0</strong></div></div></div><div class="flex items-center gap-3"><button class="flex items-center gap-2 px-3 py-2 rounded-md bg-[var(--color-bg-tertiary)] border border-[var(--color-border-default)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-elevated)] transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]" aria-label="Mute sound effects" aria-pressed="true" title="Sound effects on"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume2 lucide-volume-2 w-4 h-4" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path><path d="M16 9a5 5 0 0 1 0 6"></path><path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path></svg><span class="text-sm font-medium">Sound On</span></button><div class="px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-xs font-medium uppercase tracking-wide border bg-[rgba(88,166,255,0.15)] border-[var(--color-accent-blue)] text-[var(--color-accent-blue)]">Your Turn</div></div></header><div class="flex-1 flex flex-col lg:flex-row p-4 sm:p-6 gap-4 sm:gap-6 max-w-[1400px] mx-auto w-full"><div class="flex-1 flex flex-col gap-3 sm:gap-4 min-w-0"><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between"><div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1"><div class="w-8 h-8 sm:w-9 sm:h-9 bg-[var(--color-bg-tertiary)] rounded-full flex items-center justify-center text-lg sm:text-xl shrink-0">🤖</div><div class="flex flex-col min-w-0"><span class="font-semibold text-sm text-[var(--color-text-primary)] truncate">AI Opponent</span><span class="text-xs text-[var(--color-text-muted)] truncate">Engine</span></div></div><div class="flex items-center gap-2 sm:gap-3 ml-2"><div class="hidden sm:block"><div class="flex items-center justify-center h-8 text-xs text-[var(--color-text-muted)]" aria-label="No pieces captured by white">No captured pieces</div></div><div class="text-base sm:text-lg font-semibold px-2 sm:px-4 py-1 sm:py-2 rounded-md border shrink-0 bg-[var(--color-bg-tertiary)] border-[var(--color-border-muted)] text-[var(--color-text-primary)]">10:00</div></div></div><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-xl p-3 sm:p-6 flex justify-center shadow-lg"><div class="w-full max-w-[560px] "><div class="grid grid-cols-8 border-4 border-[var(--color-border-default)] rounded overflow-hidden relative" style="aspect-ratio:1" role="grid" aria-label="Chess board"><div id="square-a8" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square a8, black r"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black rook"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M9 39h27v-3H9v3zM12 36v-4h21v4H12zM11 14V9h4v2h5V9h5v2h5V9h4v5" stroke="#fff" stroke-width="1.5" fill="var(--chess-black-piece)"></path><path d="M34 14l-3 22H14l-3-22" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M31 14v-3.5c0-1.5-1-2.5-2.5-2.5h-12c-1.5 0-2.5 1-2.5 2.5V14" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-b8" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square a8, black r"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Rook"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M9 39h27v-3H9v3zM12 36v-4h21v4H12zM11 14V9h4v2h5V9h5v2h5V9h4v5" stroke="#fff" stroke-width="1.5" fill="var(--chess-black-piece)"></path><path d="M34 14l-3 22H14l-3-22" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M31 14v-3.5c0-1.5-1-2.5-2.5-2.5h-12c-1.5 0-2.5 1-2.5 2.5V14" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-b8" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square b8, black n"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black knight"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><circle cx="9.5" cy="25.5" r="0.5" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></circle></svg></div></div><div id="square-c8" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square b8, black n"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Knight"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><circle cx="9.5" cy="25.5" r="0.5" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></circle></svg></div></div><div id="square-c8" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square c8, black b"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black bishop"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.46 3-2 3-2z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-d8" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square c8, black b"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Bishop"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.46 3-2 3-2z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-d8" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square d8, black q"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black queen"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M8 12l5.5 5.5L8 23l5.5 5.5L8 34l14.5-6L37 34l-5.5-5.5L37 23l-5.5-5.5L37 12 22.5 18 8 12z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M8 12l3-5h24l3 5" stroke="#fff" stroke-width="1.5" fill="none"></path><path d="M11 7l-2-4M22.5 7V3M34 7l2-4" stroke="#fff" stroke-width="1.5" fill="none"></path></svg></div></div><div id="square-e8" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square d8, black q"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Queen"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M8 12l5.5 5.5L8 23l5.5 5.5L8 34l14.5-6L37 34l-5.5-5.5L37 23l-5.5-5.5L37 12 22.5 18 8 12z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M8 12l3-5h24l3 5" stroke="#fff" stroke-width="1.5" fill="none"></path><path d="M11 7l-2-4M22.5 7V3M34 7l2-4" stroke="#fff" stroke-width="1.5" fill="none"></path></svg></div></div><div id="square-e8" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square e8, black k"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black king"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22.5 11.63V6M20 8h5" stroke="#fff" stroke-width="1.5" fill="none"></path><path d="M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M11.5 37c5.5 3.5 15.5 3.5 21 0v-7s9-4.5 6-10.5c-4-1-7 2.5-7 2.5V14h-14v7.5s-3-3.5-7-2.5c-3 6 6 10.5 6 10.5v7" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-f8" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square e8, black k"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black King"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22.5 11.63V6M20 8h5" stroke="#fff" stroke-width="1.5" fill="none"></path><path d="M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M11.5 37c5.5 3.5 15.5 3.5 21 0v-7s9-4.5 6-10.5c-4-1-7 2.5-7 2.5V14h-14v7.5s-3-3.5-7-2.5c-3 6 6 10.5 6 10.5v7" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-f8" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square f8, black b"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black bishop"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.46 3-2 3-2z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-g8" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square f8, black b"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Bishop"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.46 3-2 3-2z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-g8" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square g8, black n"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black knight"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><circle cx="9.5" cy="25.5" r="0.5" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></circle></svg></div></div><div id="square-h8" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square g8, black n"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Knight"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><circle cx="9.5" cy="25.5" r="0.5" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></circle></svg></div></div><div id="square-h8" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square h8, black r"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black rook"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M9 39h27v-3H9v3zM12 36v-4h21v4H12zM11 14V9h4v2h5V9h5v2h5V9h4v5" stroke="#fff" stroke-width="1.5" fill="var(--chess-black-piece)"></path><path d="M34 14l-3 22H14l-3-22" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M31 14v-3.5c0-1.5-1-2.5-2.5-2.5h-12c-1.5 0-2.5 1-2.5 2.5V14" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-a7" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square h8, black r"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Rook"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M9 39h27v-3H9v3zM12 36v-4h21v4H12zM11 14V9h4v2h5V9h5v2h5V9h4v5" stroke="#fff" stroke-width="1.5" fill="var(--chess-black-piece)"></path><path d="M34 14l-3 22H14l-3-22" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path><path d="M31 14v-3.5c0-1.5-1-2.5-2.5-2.5h-12c-1.5 0-2.5 1-2.5 2.5V14" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-a7" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square a7, black p"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-b7" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square a7, black p"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-b7" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square b7, black p"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-c7" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square b7, black p"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-c7" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square c7, black p"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-d7" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square c7, black p"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-d7" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square d7, black p"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-e7" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square d7, black p"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-e7" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square e7, black p"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-f7" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square e7, black p"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-f7" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square f7, black p"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-g7" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square f7, black p"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-g7" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square g7, black p"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-h7" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square g7, black p"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-h7" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square h7, black p"><div role="img" tabindex="0" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center " aria-label="Black pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-black-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-a6" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square h7, black p"><div role="img" tabindex="-1" aria-disabled="true" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        cursor-default
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="Black Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-black-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-black-piece)" stroke="#fff" stroke-width="1.5"></path></svg></div></div><div id="square-a6" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square a6"></div><div id="square-b6" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square b6"></div><div id="square-c6" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square c6"></div><div id="square-d6" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square d6"></div><div id="square-e6" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square e6"></div><div id="square-f6" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square f6"></div><div id="square-g6" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square g6"></div><div id="square-h6" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square h6"></div><div id="square-a5" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square a5"></div><div id="square-b5" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square b5"></div><div id="square-c5" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square c5"></div><div id="square-d5" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square d5"></div><div id="square-e5" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square e5"></div><div id="square-f5" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square f5"></div><div id="square-g5" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square g5"></div><div id="square-h5" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square h5"></div><div id="square-a4" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square a4"></div><div id="square-b4" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square b4"></div><div id="square-c4" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square c4"></div><div id="square-d4" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square d4"></div><div id="square-e4" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square e4"></div><div id="square-f4" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square f4"></div><div id="square-g4" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square g4"></div><div id="square-h4" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square h4"></div><div id="square-a3" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square a3"></div><div id="square-b3" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square b3"></div><div id="square-c3" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square c3"></div><div id="square-d3" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square d3"></div><div id="square-e3" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square e3"></div><div id="square-f3" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square f3"></div><div id="square-g3" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square g3"></div><div id="square-h3" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
+                    
                   " role="button" tabindex="0" aria-label="Square h3"></div><div id="square-a2" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square a2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-b2" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square a2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-b2" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square b2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-c2" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square b2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-c2" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square c2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-d2" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square c2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-d2" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square d2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-e2" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square d2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-e2" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square e2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-f2" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square e2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-f2" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square f2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-g2" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square f2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-g2" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square g2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-h2" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square g2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-h2" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square h2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-a1" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square h2, white p"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Pawn"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-a1" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square a1, white r"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White rook"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M9 39h27v-3H9v3zM12 36v-4h21v4H12zM11 14V9h4v2h5V9h5v2h5V9h4v5" stroke="#000" stroke-width="1.5" fill="var(--chess-white-piece)"></path><path d="M34 14l-3 22H14l-3-22" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M31 14v-3.5c0-1.5-1-2.5-2.5-2.5h-12c-1.5 0-2.5 1-2.5 2.5V14" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-b1" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square a1, white r"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Rook"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M9 39h27v-3H9v3zM12 36v-4h21v4H12zM11 14V9h4v2h5V9h5v2h5V9h4v5" stroke="#000" stroke-width="1.5" fill="var(--chess-white-piece)"></path><path d="M34 14l-3 22H14l-3-22" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M31 14v-3.5c0-1.5-1-2.5-2.5-2.5h-12c-1.5 0-2.5 1-2.5 2.5V14" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-b1" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square b1, white n"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White knight"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><circle cx="9.5" cy="25.5" r="0.5" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></circle></svg></div></div><div id="square-c1" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square b1, white n"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Knight"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><circle cx="9.5" cy="25.5" r="0.5" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></circle></svg></div></div><div id="square-c1" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square c1, white b"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White bishop"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.46 3-2 3-2z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-d1" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square c1, white b"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Bishop"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.46 3-2 3-2z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-d1" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square d1, white q"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White queen"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M8 12l5.5 5.5L8 23l5.5 5.5L8 34l14.5-6L37 34l-5.5-5.5L37 23l-5.5-5.5L37 12 22.5 18 8 12z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M8 12l3-5h24l3 5" stroke="#000" stroke-width="1.5" fill="none"></path><path d="M11 7l-2-4M22.5 7V3M34 7l2-4" stroke="#000" stroke-width="1.5" fill="none"></path></svg></div></div><div id="square-e1" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square d1, white q"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Queen"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M8 12l5.5 5.5L8 23l5.5 5.5L8 34l14.5-6L37 34l-5.5-5.5L37 23l-5.5-5.5L37 12 22.5 18 8 12z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M8 12l3-5h24l3 5" stroke="#000" stroke-width="1.5" fill="none"></path><path d="M11 7l-2-4M22.5 7V3M34 7l2-4" stroke="#000" stroke-width="1.5" fill="none"></path></svg></div></div><div id="square-e1" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square e1, white k"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White king"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22.5 11.63V6M20 8h5" stroke="#000" stroke-width="1.5" fill="none"></path><path d="M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M11.5 37c5.5 3.5 15.5 3.5 21 0v-7s9-4.5 6-10.5c-4-1-7 2.5-7 2.5V14h-14v7.5s-3-3.5-7-2.5c-3 6 6 10.5 6 10.5v7" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-f1" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square e1, white k"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White King"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22.5 11.63V6M20 8h5" stroke="#000" stroke-width="1.5" fill="none"></path><path d="M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M11.5 37c5.5 3.5 15.5 3.5 21 0v-7s9-4.5 6-10.5c-4-1-7 2.5-7 2.5V14h-14v7.5s-3-3.5-7-2.5c-3 6 6 10.5 6 10.5v7" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-f1" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square f1, white b"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White bishop"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.46 3-2 3-2z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-g1" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square f1, white b"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Bishop"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.46 3-2 3-2z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div><div id="square-g1" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-black-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square g1, white n"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White knight"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><circle cx="9.5" cy="25.5" r="0.5" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></circle></svg></div></div><div id="square-h1" class="
+                    
+                  " role="button" tabindex="0" aria-label="Square g1, white n"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Knight"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><circle cx="9.5" cy="25.5" r="0.5" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></circle></svg></div></div><div id="square-h1" class="
                     relative flex items-center justify-center cursor-pointer
-                    transition-all duration-150
+                    transition-all duration-200 ease-out
                     bg-[var(--chess-white-square)]
                     
                     
                     hover:brightness-105
-                  " role="button" tabindex="0" aria-label="Square h1, white r"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing" aria-label="White rook"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5 pointer-events-none" style="color:var(--chess-white-piece);opacity:1"><path d="M9 39h27v-3H9v3zM12 36v-4h21v4H12zM11 14V9h4v2h5V9h5v2h5V9h4v5" stroke="#000" stroke-width="1.5" fill="var(--chess-white-piece)"></path><path d="M34 14l-3 22H14l-3-22" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M31 14v-3.5c0-1.5-1-2.5-2.5-2.5h-12c-1.5 0-2.5 1-2.5 2.5V14" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div></div></div></div><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg px-4 py-3 flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-[var(--color-bg-tertiary)] rounded-full flex items-center justify-center text-xl">👤</div><div class="flex flex-col"><span class="font-semibold text-sm text-[var(--color-text-primary)]">You</span><span class="text-xs text-[var(--color-text-muted)]">White</span></div></div><div class="text-lg font-semibold px-4 py-2 rounded-md border bg-[rgba(88,166,255,0.15)] border-[var(--color-accent-blue)] text-[var(--color-accent-blue)]">10:00</div></div></div><div class="w-80 flex flex-col gap-4"><div class="game-status"><div class="game-status-title">Game in Progress</div><div class="game-status-message">White to move</div></div><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden"><div class="px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]"><div class="flex items-center gap-2 font-semibold text-[var(--color-text-primary)]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Game Mode</div></div><div class="p-4"><div class="grid grid-cols-2 gap-2"><button class="px-4 py-2.5 rounded-md font-medium text-sm transition-all border bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border-[var(--color-border-default)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]">👥 PvP</button><button class="px-4 py-2.5 rounded-md font-medium text-sm transition-all border bg-[var(--color-accent-blue)] text-white border-[var(--color-accent-blue)]">🤖 PvA</button></div></div></div><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden flex flex-col"><div class="flex flex-col h-full"><div class="panel-header px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]"><div class="panel-title flex items-center gap-2 font-semibold text-[var(--color-text-primary)]"><svg class="panel-icon w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Move History</div></div><div class="panel-content flex-1 overflow-hidden bg-[var(--color-bg-secondary)]"><div class="move-history h-full overflow-y-auto max-h-[300px]"><div class="text-[var(--color-text-muted)] text-sm text-center py-8">No moves yet</div></div></div></div></div><div class="panel bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden"><div class="panel-header px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]"><div class="panel-title flex items-center gap-2 font-semibold text-[var(--color-text-primary)]"><svg class="panel-icon w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Controls</div></div><div class="panel-content p-4"><div class="controls-grid grid grid-cols-2 gap-3"><button class="btn btn-secondary flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border border-[var(--color-border-default)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[var(--color-bg-tertiary)]" disabled="" title="Undo last move (and AI response)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>Undo</button><button class="btn btn-secondary flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border border-[var(--color-border-default)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Flip</button><button class="btn btn-danger flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all bg-[rgba(218,54,51,0.15)] text-[var(--color-accent-red)] border border-[var(--color-accent-red)]/30 hover:bg-[var(--color-accent-red)] hover:text-white"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"></path></svg>Resign</button><button class="btn btn-primary flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all bg-[var(--color-accent-blue)] text-white border border-[var(--color-accent-blue)] hover:bg-[#4d8fdb] hover:border-[#4d8fdb]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"></path></svg>New Game</button></div></div></div></div></div></div><!--$--><!--/$--><script src="/_next/static/chunks/49849b1b478e6b82.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[39756,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"default\"]\n3:I[37457,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"default\"]\n4:I[47257,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"ClientPageRoot\"]\n5:I[31713,[\"/_next/static/chunks/27dbd5d0fdcfc803.js\"],\"default\"]\n8:I[97367,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"OutletBoundary\"]\n9:\"$Sreact.suspense\"\nb:I[97367,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"ViewportBoundary\"]\nd:I[97367,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"MetadataBoundary\"]\nf:I[68027,[],\"default\"]\n:HL[\"/_next/static/chunks/f65b731b4138b261.css\",\"style\"]\n:HL[\"/_next/static/media/0c89a48fa5027cee-s.p.4564287c.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/5c285b27cdda1fe8-s.p.a62025f2.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"Q53JpBx7lSX6Azk6-g6UF\",\"c\":[\"\",\"\"],\"q\":\"\",\"i\":false,\"f\":[[[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],[[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/f65b731b4138b261.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"className\":\"space_grotesk_1d8c5cc8-module__-5dOoa__variable dm_sans_81a33cc5-module___RQdfW__variable antialiased\",\"style\":{\"fontFamily\":\"var(--font-dm-sans), sans-serif\"},\"children\":[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]}]]}],{\"children\":[[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L4\",null,{\"Component\":\"$5\",\"serverProvidedParams\":{\"searchParams\":{},\"params\":{},\"promises\":[\"$@6\",\"$@7\"]}}],[[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/27dbd5d0fdcfc803.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[\"$\",\"$L8\",null,{\"children\":[\"$\",\"$9\",null,{\"name\":\"Next.MetadataOutlet\",\"children\":\"$@a\"}]}]]}],{},null,false,false]},null,false,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$Lb\",null,{\"children\":\"$Lc\"}],[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$Ld\",null,{\"children\":[\"$\",\"$9\",null,{\"name\":\"Next.Metadata\",\"children\":\"$Le\"}]}]}],[\"$\",\"meta\",null,{\"name\":\"next-size-adjust\",\"content\":\"\"}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$f\",[]],\"S\":true}\n"])</script><script>self.__next_f.push([1,"6:{}\n7:\"$0:f:0:1:1:children:0:props:children:0:props:serverProvidedParams:params\"\n"])</script><script>self.__next_f.push([1,"c:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\n"])</script><script>self.__next_f.push([1,"10:I[27201,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"IconMark\"]\na:null\ne:[[\"$\",\"title\",\"0\",{\"children\":\"Chess AI Game\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Modern web-based chess with AI opponent\"}],[\"$\",\"link\",\"2\",{\"rel\":\"icon\",\"href\":\"/favicon.ico?favicon.0b3bf435.ico\",\"sizes\":\"256x256\",\"type\":\"image/x-icon\"}],[\"$\",\"$L10\",\"3\",{}]]\n"])</script></body></html>
+                    
+                  " role="button" tabindex="0" aria-label="Square h1, white r"><div role="img" tabindex="0" aria-disabled="false" aria-roledescription="draggable" aria-describedby="DndDescribedBy-0" class="
+        w-full h-full flex items-center justify-center
+        cursor-grab active:cursor-grabbing
+        transition-all duration-200 ease-out
+        hover:scale-105
+        opacity-100
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]
+      " style="transition:transform 0.2s ease-out, opacity 0.2s ease-out;z-index:10" aria-label="White Rook"><svg viewBox="0 0 45 45" class="w-4/5 h-4/5" style="color:var(--chess-white-piece)" aria-hidden="true"><path d="M9 39h27v-3H9v3zM12 36v-4h21v4H12zM11 14V9h4v2h5V9h5v2h5V9h4v5" stroke="#000" stroke-width="1.5" fill="var(--chess-white-piece)"></path><path d="M34 14l-3 22H14l-3-22" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path><path d="M31 14v-3.5c0-1.5-1-2.5-2.5-2.5h-12c-1.5 0-2.5 1-2.5 2.5V14" fill="var(--chess-white-piece)" stroke="#000" stroke-width="1.5"></path></svg></div></div></div></div></div><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between"><div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1"><div class="w-8 h-8 sm:w-9 sm:h-9 bg-[var(--color-bg-tertiary)] rounded-full flex items-center justify-center text-lg sm:text-xl shrink-0">👤</div><div class="flex flex-col min-w-0"><span class="font-semibold text-sm text-[var(--color-text-primary)] truncate">You</span><span class="text-xs text-[var(--color-text-muted)] truncate">White</span></div></div><div class="flex items-center gap-2 sm:gap-3 ml-2"><div class="hidden sm:block"><div class="flex items-center justify-center h-8 text-xs text-[var(--color-text-muted)]" aria-label="No pieces captured by black">No captured pieces</div></div><div class="text-base sm:text-lg font-semibold px-2 sm:px-4 py-1 sm:py-2 rounded-md border shrink-0 bg-[rgba(88,166,255,0.15)] border-[var(--color-accent-blue)] text-[var(--color-accent-blue)]">10:00</div></div></div><div class="sm:hidden bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg p-3"><div class="text-xs text-[var(--color-text-muted)] mb-2">Captured pieces:</div><div class="flex justify-between gap-4"><div class="flex items-center justify-center h-8 text-xs text-[var(--color-text-muted)]" aria-label="No pieces captured by white">No captured pieces</div><div class="flex items-center justify-center h-8 text-xs text-[var(--color-text-muted)]" aria-label="No pieces captured by black">No captured pieces</div></div></div></div><div class="w-full lg:w-80 flex flex-col gap-4"><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden"><div class="px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]"><div class="flex items-center gap-2 font-semibold text-[var(--color-text-primary)]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Game Status</div></div><div class="p-4"><div class="rounded-lg p-4 text-center border border-[var(--color-border-default)] transition-colors duration-200" role="status" aria-live="polite" aria-label="White to move"><div class="font-semibold text-[var(--color-text-primary)] text-lg mb-1">Turn 1</div><div class="text-sm text-[var(--color-text-secondary)]">White to move</div></div><div class="mt-4 flex gap-2" role="group" aria-label="Turn indicators"><div class="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md border text-sm font-medium transition-all duration-200 bg-[rgba(88,166,255,0.15)] border-[var(--color-accent-blue)] text-[var(--color-text-primary)]" aria-current="true"><span class="w-2.5 h-2.5 rounded-full border border-[var(--color-border-default)]" style="background:var(--chess-white-piece)" aria-hidden="true"></span>White</div><div class="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md border text-sm font-medium transition-all duration-200 bg-[var(--color-bg-tertiary)] border-[var(--color-border-default)] text-[var(--color-text-secondary)]"><span class="w-2.5 h-2.5 rounded-full" style="background:var(--chess-black-piece)" aria-hidden="true"></span>Black</div></div></div></div><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden"><div class="px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]"><div class="flex items-center gap-2 font-semibold text-[var(--color-text-primary)]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Game Mode</div></div><div class="p-4"><div class="grid grid-cols-2 gap-2"><button class="px-4 py-2.5 rounded-md font-medium text-sm transition-all border focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)] bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border-[var(--color-border-default)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]" aria-pressed="false" aria-label="Player versus Player mode">PvP</button><button class="px-4 py-2.5 rounded-md font-medium text-sm transition-all border focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)] bg-[var(--color-accent-blue)] text-white border-[var(--color-accent-blue)]" aria-pressed="true" aria-label="Player versus AI mode">PvA</button></div></div></div><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden flex flex-col"><div class="flex flex-col h-full"><div class="px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]"><div class="flex items-center gap-2 font-semibold text-[var(--color-text-primary)]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Move History</div></div><div class="p-4 flex-1 overflow-hidden"><div class="h-full overflow-y-auto font-mono text-sm" role="log" aria-live="polite" aria-label="Chess move history" style="max-height:200px"><div class="text-[var(--color-text-muted)] text-sm text-center py-8">No moves yet</div></div></div></div></div><div class="text-xs text-[var(--color-text-muted)] px-2"><p>Keyboard shortcuts:</p><p><kbd class="bg-[var(--color-bg-tertiary)] px-1 rounded">Ctrl+Z</kbd> Undo</p><p><kbd class="bg-[var(--color-bg-tertiary)] px-1 rounded">N</kbd> New Game</p></div><div class="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden"><div class="px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]"><div class="flex items-center gap-2 font-semibold text-[var(--color-text-primary)]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Controls</div></div><div class="p-4"><div class="grid grid-cols-2 gap-2"><button class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all border bg-[var(--color-bg-tertiary)] border-[var(--color-border-default)] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-elevated)] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]" disabled="" aria-label="Undo last move (Ctrl+Z)" title="Undo last move (Ctrl+Z)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo2 lucide-undo-2 w-4 h-4" aria-hidden="true"><path d="M9 14 4 9l5-5"></path><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"></path></svg>Undo</button><button class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all border bg-[var(--color-bg-tertiary)] border-[var(--color-border-default)] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-elevated)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]" aria-label="Flip board" title="Flip board"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw w-4 h-4" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>Flip</button><button class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all border bg-[var(--color-accent-red)] border-[var(--color-accent-red)] text-white hover:bg-[#f85149] focus-visible:ring-2 focus-visible:ring-[var(--color-accent-red)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]" aria-label="Resign game" title="Resign game"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flag w-4 h-4" aria-hidden="true"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"></path></svg>Resign</button><button class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all border bg-[var(--color-accent-green)] border-[var(--color-accent-green)] text-white hover:bg-[#2ea043] focus-visible:ring-2 focus-visible:ring-[var(--color-accent-green)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-secondary)]" aria-label="Start new game (N)" title="Start new game (N)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw w-4 h-4" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>New Game</button></div></div></div></div></div></div><!--$--><!--/$--><script src="/_next/static/chunks/49849b1b478e6b82.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[39756,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"default\"]\n3:I[37457,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"default\"]\n4:I[47257,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"ClientPageRoot\"]\n5:I[31713,[\"/_next/static/chunks/759e960d83a460f2.js\"],\"default\"]\n8:I[97367,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"OutletBoundary\"]\n9:\"$Sreact.suspense\"\nb:I[97367,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"ViewportBoundary\"]\nd:I[97367,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"MetadataBoundary\"]\nf:I[68027,[],\"default\"]\n:HL[\"/_next/static/chunks/4864da998a70bdf8.css\",\"style\"]\n:HL[\"/_next/static/media/0c89a48fa5027cee-s.p.4564287c.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/5c285b27cdda1fe8-s.p.a62025f2.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"bFsDVEMb0yR0pjhBsoi-2\",\"c\":[\"\",\"\"],\"q\":\"\",\"i\":false,\"f\":[[[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],[[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/4864da998a70bdf8.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"className\":\"space_grotesk_1d8c5cc8-module__-5dOoa__variable dm_sans_81a33cc5-module___RQdfW__variable antialiased\",\"style\":{\"fontFamily\":\"var(--font-dm-sans), sans-serif\"},\"children\":[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]}]]}],{\"children\":[[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L4\",null,{\"Component\":\"$5\",\"serverProvidedParams\":{\"searchParams\":{},\"params\":{},\"promises\":[\"$@6\",\"$@7\"]}}],[[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/759e960d83a460f2.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[\"$\",\"$L8\",null,{\"children\":[\"$\",\"$9\",null,{\"name\":\"Next.MetadataOutlet\",\"children\":\"$@a\"}]}]]}],{},null,false,false]},null,false,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$Lb\",null,{\"children\":\"$Lc\"}],[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$Ld\",null,{\"children\":[\"$\",\"$9\",null,{\"name\":\"Next.Metadata\",\"children\":\"$Le\"}]}]}],[\"$\",\"meta\",null,{\"name\":\"next-size-adjust\",\"content\":\"\"}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$f\",[]],\"S\":true}\n"])</script><script>self.__next_f.push([1,"6:{}\n7:\"$0:f:0:1:1:children:0:props:children:0:props:serverProvidedParams:params\"\n"])</script><script>self.__next_f.push([1,"c:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\n"])</script><script>self.__next_f.push([1,"10:I[27201,[\"/_next/static/chunks/2f236954d6a65e12.js\"],\"IconMark\"]\na:null\ne:[[\"$\",\"title\",\"0\",{\"children\":\"Chess AI Game\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Modern web-based chess with AI opponent\"}],[\"$\",\"link\",\"2\",{\"rel\":\"icon\",\"href\":\"/favicon.ico?favicon.0b3bf435.ico\",\"sizes\":\"256x256\",\"type\":\"image/x-icon\"}],[\"$\",\"$L10\",\"3\",{}]]\n"])</script></body></html>
