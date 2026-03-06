@@ -1,0 +1,7 @@
+STATUS: done
+STITCH_PROJECT_ID: 12720210135208643872
+DEVICE_TYPE: DESKTOP
+SCREENS_GENERATED: 1
+DESIGN_MANIFEST: stitch/DESIGN_MANIFEST.json
+DESIGN_TOKENS: stitch/design-tokens.css
+DESIGN_NOTES: Generated main chess game screen with dark DevTool/CLI Dashboard theme. Features 8x8 chess board with SVG pieces, player info bars with timers, move history sidebar with algebraic notation, difficulty selector (Easy/Medium/Hard), game controls (Undo, Flip, Resign, New Game), captured pieces display, and game status indicator. Colors follow palette with #0d1117 primary background, #58a6ff accent blue, and chess-appropriate square colors (#e8e8e8 light, #769656 dark). Typography uses Space Grotesk for headings and DM Sans for body text as specified.
