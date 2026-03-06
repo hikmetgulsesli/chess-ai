@@ -2,7 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "../stitch/design-tokens.css";
-@import "../stitch/design-tokens.css";
 
 @custom-variant dark (&:is(.dark *));
 

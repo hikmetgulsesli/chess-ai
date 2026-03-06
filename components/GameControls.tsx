@@ -2,8 +2,7 @@
 
 import React from "react";
 import { useGameState } from "@/lib/game-state";
-
-export type GameMode = "pvp" | "pva";
+import type { GameMode } from "@/app/page";
 
 interface GameControlsProps {
   gameMode?: GameMode;
