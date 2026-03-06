@@ -3,20 +3,20 @@ import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
-  variable: "--font-heading",
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
 const dmSans = DM_Sans({
-  variable: "--font-body",
+  variable: "--font-dm-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Chess AI - Play Against Stockfish",
-  description: "Modern web-based chess game with AI opponent powered by Stockfish",
+  title: "Chess AI Game",
+  description: "Modern web-based chess with AI opponent",
 };
 
 export default function RootLayout({
@@ -28,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${spaceGrotesk.variable} ${dmSans.variable} antialiased`}
+        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
       >
         {children}
       </body>
