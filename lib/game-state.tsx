@@ -19,6 +19,13 @@ export interface PendingPromotion {
   color: "w" | "b";
 }
 
+export interface CastlingRights {
+  whiteKingside: boolean;
+  whiteQueenside: boolean;
+  blackKingside: boolean;
+  blackQueenside: boolean;
+}
+
 export interface GameState {
   // Chess.js instance (internal)
   chess: Chess;
@@ -42,8 +49,17 @@ export interface GameState {
   isStalemate: boolean;
   // Is game over?
   isGameOver: boolean;
-  // Pending promotion dialog state
+  // Pending promotion (when pawn reaches last rank)
   pendingPromotion: PendingPromotion | null;
+  // En passant target square (if available)
+  enPassantTarget: string | null;
+  // Castling rights
+  castlingRights: CastlingRights;
+  // Special moves available from selected square
+  specialMoves: {
+    castling: { to: string; side: "kingside" | "queenside" }[];
+    enPassant: { to: string; captureSquare: string }[];
+  };
 }
 
 export interface GameActions {
@@ -63,9 +79,9 @@ export interface GameActions {
   getFen: () => string;
   // Check if a move is legal
   isLegalMove: (from: string, to: string) => boolean;
-  // Complete pawn promotion with chosen piece
+  // Complete pending promotion with chosen piece
   completePromotion: (piece: "q" | "r" | "b" | "n") => boolean;
-  // Cancel pawn promotion dialog
+  // Cancel pending promotion
   cancelPromotion: () => void;
 }
 
@@ -116,20 +132,81 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
       to: move.to,
       promotion: move.promotion,
       san: move.san,
+      flags: move.flags,
     }));
   }, [chess]);
 
-  // Check if move is a pawn promotion
-  const isPawnPromotion = useCallback(
-    (from: string, to: string): boolean => {
-      const piece = chess.get(from as Square);
-      if (!piece || piece.type !== "p") return false;
-      const targetRank = to.charAt(1);
-      return (piece.color === "w" && targetRank === "8") ||
-             (piece.color === "b" && targetRank === "1");
-    },
-    [chess]
-  );
+  // Get en passant target from FEN
+  const enPassantTarget = useMemo(() => {
+    const fen = chess.fen();
+    const parts = fen.split(" ");
+    const ep = parts[3];
+    return ep !== "-" ? ep : null;
+  }, [chess]);
+
+  // Get castling rights from FEN
+  const castlingRights: CastlingRights = useMemo(() => {
+    const fen = chess.fen();
+    const parts = fen.split(" ");
+    const rights = parts[2];
+    return {
+      whiteKingside: rights.includes("K"),
+      whiteQueenside: rights.includes("Q"),
+      blackKingside: rights.includes("k"),
+      blackQueenside: rights.includes("q"),
+    };
+  }, [chess]);
+
+  // Check if a move is a pawn promotion
+  const isPawnPromotion = useCallback((from: string, to: string): boolean => {
+    const piece = chess.get(from as Square);
+    if (!piece || piece.type !== "p") return false;
+    
+    const targetRank = to.charAt(1);
+    // White pawn reaching rank 8 or black pawn reaching rank 1
+    return (piece.color === "w" && targetRank === "8") || 
+           (piece.color === "b" && targetRank === "1");
+  }, [chess]);
+
+  // Get special moves for a square
+  const getSpecialMoves = useCallback((square: string | null) => {
+    if (!square) {
+      return { castling: [], enPassant: [] };
+    }
+
+    const piece = chess.get(square as Square);
+    if (!piece) {
+      return { castling: [], enPassant: [] };
+    }
+
+    const moves = chess.moves({ square: square as Square, verbose: true });
+    const castling: { to: string; side: "kingside" | "queenside" }[] = [];
+    const enPassant: { to: string; captureSquare: string }[] = [];
+
+    for (const move of moves) {
+      // Check for castling (flags contain 'k' for kingside or 'q' for queenside)
+      if (move.flags.includes("k")) {
+        castling.push({ to: move.to, side: "kingside" });
+      } else if (move.flags.includes("q")) {
+        castling.push({ to: move.to, side: "queenside" });
+      }
+      
+      // Check for en passant (flags contain 'e')
+      if (move.flags.includes("e")) {
+        // The capture square is the square where the pawn being captured is
+        const captureRank = move.color === "w" ? "5" : "4";
+        const captureSquare = move.to.charAt(0) + captureRank;
+        enPassant.push({ to: move.to, captureSquare });
+      }
+    }
+
+    return { castling, enPassant };
+  }, [chess]);
+
+  // Get special moves for current selection
+  const specialMoves = useMemo(() => {
+    return getSpecialMoves(selectedSquare);
+  }, [selectedSquare, getSpecialMoves]);
 
   // Get valid moves for a square
   const getValidMoves = useCallback(
@@ -147,14 +224,19 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
   const makeMove = useCallback(
     (from: string, to: string, promotion?: string): boolean => {
       try {
-        // Check for pawn promotion without explicit piece
+        // Check if this is a pawn promotion move
         if (!promotion && isPawnPromotion(from, to)) {
           const piece = chess.get(from as Square);
-          setPendingPromotion({ from, to, color: piece!.color });
+          setPendingPromotion({
+            from,
+            to,
+            color: piece!.color,
+          });
           setSelectedSquare(null);
           setValidMoves([]);
-          return true;
+          return true; // Return true to indicate the move is valid but needs promotion piece
         }
+
         const move = chess.move({ from, to, promotion: promotion || "q" });
         if (move) {
           // Create new Chess instance to trigger re-render
@@ -172,16 +254,18 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
     [chess, isPawnPromotion]
   );
 
-  // Complete pawn promotion with chosen piece
+  // Complete pending promotion
   const completePromotion = useCallback(
     (piece: "q" | "r" | "b" | "n"): boolean => {
       if (!pendingPromotion) return false;
+      
       try {
         const move = chess.move({
           from: pendingPromotion.from,
           to: pendingPromotion.to,
           promotion: piece,
         });
+        
         if (move) {
           setChess(new Chess(chess.fen()));
           setPendingPromotion(null);
@@ -197,7 +281,7 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
     [chess, pendingPromotion]
   );
 
-  // Cancel pawn promotion dialog
+  // Cancel pending promotion
   const cancelPromotion = useCallback(() => {
     setPendingPromotion(null);
     setSelectedSquare(null);
@@ -265,11 +349,13 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
       setChess(new Chess(chess.fen()));
       setSelectedSquare(null);
       setValidMoves([]);
+      setPendingPromotion(null);
       return {
         from: undone.from,
         to: undone.to,
         promotion: undone.promotion,
         san: undone.san,
+        flags: undone.flags,
       };
     }
     return null;
@@ -280,6 +366,7 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
     setChess(new Chess());
     setSelectedSquare(null);
     setValidMoves([]);
+    setPendingPromotion(null);
   }, []);
 
   // Load FEN
@@ -289,6 +376,7 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
       setChess(newChess);
       setSelectedSquare(null);
       setValidMoves([]);
+      setPendingPromotion(null);
       return true;
     } catch {
       return false;
@@ -313,6 +401,9 @@ export function GameStateProvider({ children, initialFen }: GameStateProviderPro
     isStalemate: chess.isStalemate(),
     isGameOver: chess.isGameOver(),
     pendingPromotion,
+    enPassantTarget,
+    castlingRights,
+    specialMoves,
     makeMove,
     selectSquare,
     getValidMoves,

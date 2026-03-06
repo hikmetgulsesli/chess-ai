@@ -45,6 +45,7 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
     selectSquare,
     makeMove,
     isCheck,
+    isGameOver,
   } = useGameState();
 
   const [activePiece, setActivePiece] = useState<ActivePiece | null>(null);
@@ -61,6 +62,9 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
 
   const handleDragStart = useCallback(
     (event: DragStartEvent) => {
+      // Disable interactions when game is over
+      if (isGameOver) return;
+      
       const square = event.active.id.toString().replace("piece-", "");
       const { row, col } = fromAlgebraic(square);
       const piece = board[row]?.[col];
@@ -70,13 +74,19 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
         selectSquare(square);
       }
     },
-    [board, turn, selectSquare]
+    [board, turn, selectSquare, isGameOver]
   );
 
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       const { active, over } = event;
       setActivePiece(null);
+
+      // Disable interactions when game is over
+      if (isGameOver) {
+        selectSquare(null);
+        return;
+      }
 
       if (!over) {
         selectSquare(null);
@@ -97,15 +107,18 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
         setTimeout(() => setIllegalMoveTarget(null), 300);
       }
     },
-    [makeMove, selectSquare]
+    [makeMove, selectSquare, isGameOver]
   );
 
   const handleSquareClick = useCallback(
     (row: number, col: number) => {
+      // Disable interactions when game is over
+      if (isGameOver) return;
+      
       const square = toAlgebraic(row, col);
       selectSquare(square);
     },
-    [selectSquare]
+    [selectSquare, isGameOver]
   );
 
   const isLightSquare = (row: number, col: number): boolean => (row + col) % 2 === 0;
@@ -154,18 +167,19 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
                   id={`square-${square}`}
                   onClick={() => handleSquareClick(rowIndex, colIndex)}
                   className={`
-                    relative flex items-center justify-center cursor-pointer
+                    relative flex items-center justify-center
                     transition-all duration-150
                     ${light ? "bg-[var(--chess-white-square)]" : "bg-[var(--chess-black-square)]"}
                     ${selected ? "ring-2 ring-[var(--color-accent-blue)] ring-inset z-10" : ""}
-                    ${isKingInCheck ? "ring-2 ring-[var(--color-accent-red)] ring-inset" : ""}
-                    ${illegalMove ? "bg-red-400/50" : "hover:brightness-105"}
+                    ${isKingInCheck ? "ring-4 ring-[var(--color-accent-red)] ring-inset animate-pulse" : ""}
+                    ${illegalMove ? "bg-red-400/50" : !isGameOver ? "hover:brightness-105 cursor-pointer" : "cursor-default"}
+                    ${isGameOver ? "opacity-90" : ""}
                   `}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Square ${square}${piece ? `, ${piece.color === "w" ? "white" : "black"} ${piece.type}` : ""}`}
+                  role={isGameOver ? "presentation" : "button"}
+                  tabIndex={isGameOver ? -1 : 0}
+                  aria-label={`Square ${square}${piece ? `, ${piece.color === "w" ? "white" : "black"} ${piece.type}` : ""}${isKingInCheck ? ", in check" : ""}`}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
+                    if (!isGameOver && (e.key === "Enter" || e.key === " ")) {
                       handleSquareClick(rowIndex, colIndex);
                     }
                   }}
@@ -181,7 +195,7 @@ export function ChessBoard({ className = "" }: ChessBoardProps) {
                       type={piece.type}
                       color={piece.color}
                       square={square}
-                      disabled={piece.color !== turn}
+                      disabled={piece.color !== turn || isGameOver}
                     />
                   )}
                 </div>

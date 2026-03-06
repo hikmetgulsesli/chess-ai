@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "../stitch/design-tokens.css";
+@import "../stitch/design-tokens.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -372,8 +373,7 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--color-accent-green);
-  filter: brightness(1.2);
+  background: #2ea043;
 }
 
 .btn-danger {
@@ -383,8 +383,7 @@
 }
 
 .btn-danger:hover:not(:disabled) {
-  background: var(--color-accent-red);
-  filter: brightness(1.2);
+  background: #f85149;
 }
 
 /* Difficulty Selector */

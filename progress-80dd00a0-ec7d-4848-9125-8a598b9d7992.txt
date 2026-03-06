@@ -1,21 +1,19 @@
-=== US-001: Project setup with design tokens and chess board foundation ===
-COMPLETED: 2026-03-06T05:47:00+03:00
+=== US-004: AI opponent with minimax algorithm and difficulty levels ===
+COMPLETED: 2026-03-06T07:55:00+03:00
 FILES CHANGED:
-  - app/globals.css (updated with design tokens import)
-  - app/layout.tsx (updated with Space Grotesk + DM Sans fonts)
-  - app/page.tsx (updated with ChessBoard component)
-  - components/ChessBoard.tsx (new)
-  - .env.example (new)
-  - package.json (added typecheck script)
+  - lib/ai-engine.ts (new - AI engine with minimax and evaluation)
+  - components/AISelector.tsx (new - game mode and difficulty selector)
+  - app/page.tsx (updated - AI integration)
 
 KEY DECISIONS:
-  - Imported design tokens directly from stitch/design-tokens.css using @import
-  - Used next/font for optimal Google Fonts loading
-  - Created reusable ChessBoard component with TypeScript
-  - Used Unicode chess pieces for simplicity (SVG can be added later)
-  - Made board responsive using max-width and aspect-ratio
+  - Used chess.js for game logic as it was already integrated in the project
+  - Implemented minimax algorithm with alpha-beta pruning for efficiency
+  - Created position evaluation tables for each piece type
+  - Three difficulty levels with different search depths
+  - AI runs asynchronously with thinking indicator for better UX
+  - Game mode toggle allows switching between PvP and PvAI
 
-DEPENDENCIES ADDED: None (used existing dependencies)
+DEPENDENCIES ADDED: None (used existing chess.js dependency)
 
-PR: https://github.com/hikmetgulsesli/chess-ai/pull/1
-BRANCH: 80dd00a0-US-001
+PR: https://github.com/hikmetgulsesli/chess-ai/pull/4
+BRANCH: 80dd00a0-US-004
