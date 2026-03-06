@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useGameState, type GameStatus } from "@/lib/game-state";
+import { useGameState } from "@/lib/game-state";
 
 interface GameOverModalProps {
   isOpen: boolean;

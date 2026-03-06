@@ -12,31 +12,25 @@ function Header({ gameMode }: { gameMode: GameMode }) {
   const moveCount = history.length;
 
   return (
-    <header className="bg-[var(--color-bg-secondary)] border-b border-[var(--color-border-default)] px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="font-[family-name:var(--font-heading)] text-2xl font-bold text-[var(--color-text-primary)] flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-[var(--color-accent-blue)] to-[var(--color-accent-purple)] rounded-md flex items-center justify-center text-lg">
-            ♟
-          </div>
+    <header className="header">
+      <div className="header-left">
+        <div className="logo">
+          <div className="logo-icon">♟</div>
           Chess AI
         </div>
-        <div className="flex items-center gap-6 text-sm text-[var(--color-text-secondary)]">
-          <div className="flex items-center gap-1">
+        <div className="game-info">
+          <div className="game-info-item">
             <span>Mode:</span>
-            <strong className="text-[var(--color-text-primary)] uppercase">{gameMode}</strong>
+            <strong>{gameMode === "pva" ? "PvA" : "PvP"}</strong>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="game-info-item">
             <span>Moves:</span>
-            <strong className="text-[var(--color-text-primary)]">{moveCount}</strong>
+            <strong>{moveCount}</strong>
           </div>
         </div>
       </div>
-      <div className={`px-3 py-1.5 rounded-md text-xs font-medium uppercase tracking-wide border ${
-        turn === "w" 
-          ? "bg-[rgba(88,166,255,0.15)] border-[var(--color-accent-blue)] text-[var(--color-accent-blue)]" 
-          : "bg-[var(--color-bg-tertiary)] border-[var(--color-border-default)] text-[var(--color-text-secondary)]"
-      }`}>
-        {turn === "w" ? "Your Turn" : "AI Thinking"}
+      <div className={`status-badge ${turn === "w" ? "active" : ""}`}>
+        {turn === "w" ? "Your Turn" : "AI Turn"}
       </div>
     </header>
   );
@@ -55,21 +49,15 @@ function PlayerBar({
   const isActive = isOpponent ? turn === "b" : turn === "w";
 
   return (
-    <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg px-4 py-3 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className="w-9 h-9 bg-[var(--color-bg-tertiary)] rounded-full flex items-center justify-center text-xl">
-          {isOpponent ? "🤖" : "👤"}
-        </div>
-        <div className="flex flex-col">
-          <span className="font-semibold text-sm text-[var(--color-text-primary)]">{name}</span>
-          <span className="text-xs text-[var(--color-text-muted)]">{rating}</span>
+    <div className="player-bar">
+      <div className="player-info">
+        <div className="player-avatar">{isOpponent ? "🤖" : "👤"}</div>
+        <div className="player-details">
+          <span className="player-name">{name}</span>
+          <span className="player-rating">{rating}</span>
         </div>
       </div>
-      <div className={`font-[family-name:var(--font-heading)] text-lg font-semibold px-4 py-2 rounded-md border ${
-        isActive 
-          ? "bg-[rgba(88,166,255,0.15)] border-[var(--color-accent-blue)] text-[var(--color-accent-blue)]" 
-          : "bg-[var(--color-bg-tertiary)] border-[var(--color-border-muted)] text-[var(--color-text-primary)]"
-      }`}>
+      <div className={`player-timer ${isActive ? "active" : ""}`}>
         10:00
       </div>
     </div>
@@ -84,33 +72,25 @@ function GameModeSelector({
   onGameModeChange: (mode: GameMode) => void;
 }) {
   return (
-    <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden">
-      <div className="px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]">
-        <div className="flex items-center gap-2 font-semibold text-[var(--color-text-primary)]">
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <div className="panel">
+      <div className="panel-header">
+        <div className="panel-title">
+          <svg className="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
           Game Mode
         </div>
       </div>
-      <div className="p-4">
-        <div className="grid grid-cols-2 gap-2">
+      <div className="panel-content">
+        <div className="difficulty-selector">
           <button 
-            className={`px-4 py-2.5 rounded-md font-medium text-sm transition-all border ${
-              gameMode === "pvp"
-                ? "bg-[var(--color-accent-blue)] text-white border-[var(--color-accent-blue)]"
-                : "bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border-[var(--color-border-default)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]"
-            }`}
+            className={`difficulty-btn ${gameMode === "pvp" ? "active" : ""}`}
             onClick={() => onGameModeChange("pvp")}
           >
             👥 PvP
           </button>
           <button 
-            className={`px-4 py-2.5 rounded-md font-medium text-sm transition-all border ${
-              gameMode === "pva"
-                ? "bg-[var(--color-accent-blue)] text-white border-[var(--color-accent-blue)]"
-                : "bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border-[var(--color-border-default)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]"
-            }`}
+            className={`difficulty-btn ${gameMode === "pva" ? "active" : ""}`}
             onClick={() => onGameModeChange("pva")}
           >
             🤖 PvA
@@ -122,50 +102,21 @@ function GameModeSelector({
 }
 
 function DifficultySelector() {
-  const [difficulty, setDifficulty] = useState<"easy" | "medium" | "hard">("medium");
-
   return (
-    <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden">
-      <div className="px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]">
-        <div className="flex items-center gap-2 font-semibold text-[var(--color-text-primary)]">
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <div className="panel">
+      <div className="panel-header">
+        <div className="panel-title">
+          <svg className="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
           AI Difficulty
         </div>
       </div>
-      <div className="p-4">
-        <div className="grid grid-cols-3 gap-2">
-          <button 
-            className={`px-3 py-2 rounded-md font-medium text-sm transition-all border ${
-              difficulty === "easy"
-                ? "bg-[var(--color-accent-green)] text-white border-[var(--color-accent-green)]"
-                : "bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border-[var(--color-border-default)] hover:bg-[var(--color-bg-elevated)]"
-            }`}
-            onClick={() => setDifficulty("easy")}
-          >
-            Easy
-          </button>
-          <button 
-            className={`px-3 py-2 rounded-md font-medium text-sm transition-all border ${
-              difficulty === "medium"
-                ? "bg-[var(--color-accent-yellow)] text-black border-[var(--color-accent-yellow)]"
-                : "bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border-[var(--color-border-default)] hover:bg-[var(--color-bg-elevated)]"
-            }`}
-            onClick={() => setDifficulty("medium")}
-          >
-            Medium
-          </button>
-          <button 
-            className={`px-3 py-2 rounded-md font-medium text-sm transition-all border ${
-              difficulty === "hard"
-                ? "bg-[var(--color-accent-red)] text-white border-[var(--color-accent-red)]"
-                : "bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] border-[var(--color-border-default)] hover:bg-[var(--color-bg-elevated)]"
-            }`}
-            onClick={() => setDifficulty("hard")}
-          >
-            Hard
-          </button>
+      <div className="panel-content">
+        <div className="difficulty-selector">
+          <button className="difficulty-btn">Easy</button>
+          <button className="difficulty-btn active">Medium</button>
+          <button className="difficulty-btn">Hard</button>
         </div>
       </div>
     </div>
@@ -185,18 +136,18 @@ function GameContent() {
     <>
       <Header gameMode={gameMode} />
       
-      <div className="flex-1 flex p-6 gap-6 max-w-[1400px] mx-auto w-full">
+      <div className="main-container">
         {/* Board Section */}
-        <div className="flex-1 flex flex-col gap-4">
+        <div className="board-section">
           {/* Opponent Bar */}
           <PlayerBar 
             isOpponent={true} 
             name={gameMode === "pva" ? "AI Opponent" : "Player 2"} 
-            rating={gameMode === "pva" ? "Stockfish Engine" : "Black"}
+            rating={gameMode === "pva" ? "Engine" : "Black"}
           />
 
           {/* Chess Board */}
-          <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-xl p-6 flex justify-center shadow-lg">
+          <div className="chess-board-container">
             <ChessBoard />
           </div>
 
@@ -209,7 +160,7 @@ function GameContent() {
         </div>
 
         {/* Sidebar */}
-        <div className="w-80 flex flex-col gap-4">
+        <div className="sidebar">
           {/* Game Status */}
           <TurnIndicator />
 
@@ -220,7 +171,7 @@ function GameContent() {
           {gameMode === "pva" && <DifficultySelector />}
 
           {/* Move History */}
-          <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border-default)] rounded-lg overflow-hidden flex flex-col">
+          <div className="panel">
             <MoveHistory />
           </div>
 
