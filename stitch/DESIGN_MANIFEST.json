@@ -1,0 +1,65 @@
+{
+  "projectId": "12720210135208643872",
+  "projectName": "chess-ai",
+  "deviceType": "DESKTOP",
+  "designSystem": {
+    "aesthetic": "editorial",
+    "palette": "DevTool / CLI Dashboard",
+    "headingFont": "Space Grotesk",
+    "bodyFont": "DM Sans",
+    "iconLibrary": "Lucide React"
+  },
+  "screens": [
+    {
+      "id": "main-game-screen",
+      "title": "Main Chess Game Screen",
+      "description": "Primary game interface with chess board, player info bars, move history sidebar, and game controls",
+      "file": "stitch/main-game-screen.html",
+      "type": "primary",
+      "features": [
+        "8x8 chess board with SVG piece rendering",
+        "Player/opponent info bars with timers",
+        "Move history with algebraic notation",
+        "Difficulty selector (Easy/Medium/Hard)",
+        "Game controls (Undo, Flip, Resign, New Game)",
+        "Captured pieces display",
+        "Game status indicator"
+      ]
+    }
+  ],
+  "tokens": {
+    "file": "stitch/design-tokens.css"
+  },
+  "colors": {
+    "background": {
+      "primary": "#0d1117",
+      "secondary": "#161b22",
+      "tertiary": "#21262d",
+      "elevated": "#30363d"
+    },
+    "text": {
+      "primary": "#f0f6fc",
+      "secondary": "#8b949e",
+      "muted": "#6e7681",
+      "accent": "#58a6ff"
+    },
+    "accent": {
+      "blue": "#58a6ff",
+      "green": "#238636",
+      "yellow": "#d29922",
+      "red": "#da3633",
+      "purple": "#8957e5"
+    },
+    "chess": {
+      "whiteSquare": "#e8e8e8",
+      "blackSquare": "#769656",
+      "whitePiece": "#f0f6fc",
+      "blackPiece": "#161b22"
+    }
+  },
+  "typography": {
+    "heading": "Space Grotesk",
+    "body": "DM Sans"
+  },
+  "generatedAt": "2026-03-06T03:00:00+03:00"
+}
