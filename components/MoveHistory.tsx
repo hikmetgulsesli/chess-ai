@@ -27,50 +27,55 @@ export function MoveHistory() {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="panel-header px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]">
-        <div className="panel-title flex items-center gap-2 font-semibold text-[var(--color-text-primary)]">
-          <svg className="panel-icon w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <div className="px-4 py-3 border-b border-[var(--color-border-default)] bg-[var(--color-bg-tertiary)]">
+        <div className="flex items-center gap-2 font-semibold text-[var(--color-text-primary)]">
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           Move History
         </div>
       </div>
-      <div className="panel-content flex-1 overflow-hidden bg-[var(--color-bg-secondary)]">
+      <div className="p-4 flex-1 overflow-hidden">
         <div 
-          ref={scrollRef}
-          className="move-history h-full overflow-y-auto max-h-[300px]"
+          ref={scrollRef} 
+          className="h-full overflow-y-auto font-mono text-sm"
+          role="log"
+          aria-live="polite"
+          aria-label="Chess move history"
+          style={{ maxHeight: "200px" }}
         >
           {movePairs.length === 0 ? (
             <div className="text-[var(--color-text-muted)] text-sm text-center py-8">
               No moves yet
             </div>
           ) : (
-            <div className="divide-y divide-[var(--color-border-muted)]">
+            <div className="space-y-1">
               {movePairs.map((pair) => (
                 <div 
                   key={pair.moveNumber} 
-                  className="move-row grid grid-cols-3 gap-2 px-3 py-2 hover:bg-[var(--color-bg-tertiary)] transition-colors"
+                  className="flex gap-4 py-1 border-b border-[var(--color-border-muted)] last:border-b-0 animate-slide-in"
+                  style={{ animationDelay: `${pair.moveNumber * 0.05}s` }}
                 >
-                  <span className="move-number text-[var(--color-text-muted)] text-sm font-mono">
+                  <span className="text-[var(--color-text-muted)] w-8 shrink-0">
                     {pair.moveNumber}.
                   </span>
-                  <span className="move-white text-[var(--color-text-primary)] text-sm font-mono font-medium">
+                  <span className="text-[var(--color-text-primary)] font-medium w-16 shrink-0">
                     {pair.white || "..."}
                   </span>
-                  <span className="move-black text-[var(--color-text-primary)] text-sm font-mono font-medium">
+                  <span className="text-[var(--color-text-primary)] font-medium">
                     {pair.black || ""}
                   </span>
                 </div>
               ))}
-            </div>
-          )}
-          {/* Current turn indicator */}
-          {history.length % 2 === 0 && history.length > 0 && (
-            <div className="move-row grid grid-cols-3 gap-2 px-3 py-2 opacity-50">
-              <span className="move-number text-[var(--color-text-muted)] text-sm font-mono">
-                {Math.floor(history.length / 2) + 1}.
-              </span>
-              <span className="move-white text-[var(--color-text-primary)] text-sm font-mono">...</span>
+              {/* Current turn indicator */}
+              {history.length % 2 === 0 && history.length > 0 && (
+                <div className="flex gap-4 py-1 opacity-50">
+                  <span className="text-[var(--color-text-muted)] w-8 shrink-0">
+                    {Math.floor(history.length / 2) + 1}.
+                  </span>
+                  <span className="text-[var(--color-text-primary)] font-medium">...</span>
+                </div>
+              )}
             </div>
           )}
         </div>

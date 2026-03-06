@@ -93,376 +93,177 @@
   }
 }
 
-/* Chess Game Layout Styles */
-
-.header {
-  background: var(--color-bg-secondary);
-  border-bottom: 1px solid var(--color-border-default);
-  padding: 1rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.logo {
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.logo-icon {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-purple));
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-}
-
-.game-info {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-}
-
-.game-info-item {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-}
-
-.status-badge {
-  background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border-default);
-  padding: 0.375rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
-  color: var(--color-text-secondary);
-}
-
-.status-badge.active {
-  background: rgba(88, 166, 255, 0.15);
-  border-color: var(--color-accent-blue);
-  color: var(--color-accent-blue);
-}
-
-/* Main Layout */
-.main-container {
-  flex: 1;
-  display: flex;
-  padding: 1.5rem;
-  gap: 1.5rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* Board Section */
-.board-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.player-bar {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-default);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.player-info {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.player-avatar {
-  width: 36px;
-  height: 36px;
-  background: var(--color-bg-tertiary);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-}
-
-.player-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.player-name {
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--color-text-primary);
-}
-
-.player-rating {
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-}
-
-.player-timer {
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  background: var(--color-bg-tertiary);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid var(--color-border-muted);
-}
-
-.player-timer.active {
-  background: rgba(88, 166, 255, 0.15);
-  border-color: var(--color-accent-blue);
-  color: var(--color-accent-blue);
-}
-
-/* Chess Board */
-.chess-board-container {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-default);
-  border-radius: 12px;
-  padding: 1.5rem;
-  display: flex;
-  justify-content: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-}
-
-/* Sidebar */
-.sidebar {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.panel {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-default);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.panel-header {
-  background: var(--color-bg-tertiary);
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--color-border-default);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.panel-title {
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.panel-icon {
-  width: 16px;
-  height: 16px;
-  color: var(--color-text-secondary);
-}
-
-.panel-content {
-  padding: 1rem;
-}
-
-/* Move History */
-.move-history {
-  max-height: 280px;
-  overflow-y: auto;
-  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 0.8125rem;
-}
-
-.move-row {
-  display: flex;
-  gap: 1rem;
-  padding: 0.375rem 0;
-  border-bottom: 1px solid var(--color-border-muted);
-}
-
-.move-row:last-child {
-  border-bottom: none;
-}
-
-.move-number {
-  color: var(--color-text-muted);
-  min-width: 24px;
-}
-
-.move-white,
-.move-black {
-  color: var(--color-text-primary);
-  min-width: 60px;
-  font-weight: 500;
-}
-
-/* Controls */
-.controls-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-}
-
-.btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  border: 1px solid transparent;
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-secondary {
-  background: var(--color-bg-tertiary);
-  border-color: var(--color-border-default);
-  color: var(--color-text-primary);
-}
-
-.btn-secondary:hover:not(:disabled) {
-  background: var(--color-bg-elevated);
-  border-color: var(--color-border-muted);
-}
-
-.btn-primary {
-  background: var(--color-accent-green);
-  border-color: var(--color-accent-green);
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: #2ea043;
-}
-
-.btn-danger {
-  background: var(--color-accent-red);
-  border-color: var(--color-accent-red);
-  color: white;
-}
-
-.btn-danger:hover:not(:disabled) {
-  background: #f85149;
-}
-
-/* Difficulty Selector */
-.difficulty-selector {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.difficulty-btn {
-  flex: 1;
-  padding: 0.5rem;
-  background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border-default);
-  border-radius: 6px;
-  color: var(--color-text-secondary);
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.difficulty-btn:hover {
-  background: var(--color-bg-elevated);
-  color: var(--color-text-primary);
-}
-
-.difficulty-btn.active {
-  background: rgba(88, 166, 255, 0.15);
-  border-color: var(--color-accent-blue);
-  color: var(--color-accent-blue);
-}
-
-/* Game Status */
-.game-status {
-  background: linear-gradient(135deg, rgba(88, 166, 255, 0.1), rgba(137, 87, 229, 0.1));
-  border: 1px solid var(--color-border-default);
-  border-radius: 8px;
-  padding: 1rem;
-  text-align: center;
-}
-
-.game-status-title {
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: 0.25rem;
-}
-
-.game-status-message {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-bg-tertiary);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-bg-elevated);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-border-default);
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .main-container {
-    flex-direction: column;
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
   }
-  .sidebar {
-    width: 100%;
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseCheck {
+  0%, 100% {
+    background-color: rgba(218, 54, 51, 0.6);
+  }
+  50% {
+    background-color: rgba(218, 54, 51, 0.3);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes captureFade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.animate-pulse-check {
+  animation: pulseCheck 0.8s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.2s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out forwards;
+}
+
+.animate-capture {
+  animation: captureFade 0.3s ease-out forwards;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-fade-in,
+  .animate-pulse-check,
+  .animate-shake,
+  .animate-slide-in,
+  .animate-scale-in,
+  .animate-capture {
+    animation: none !important;
+  }
+}
+
+/* Focus visible styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 2px;
+}
+
+/* Keyboard shortcuts styling */
+kbd {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-default);
+  box-shadow: 0 1px 0 var(--color-border-default);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+  .chess-square {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  button, 
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border-default: #ffffff;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #cccccc;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
   }
 }
