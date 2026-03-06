@@ -3,13 +3,32 @@
 import React from "react";
 import { useGameState } from "@/lib/game-state";
 
-export function GameControls() {
-  const { undoMove, resetGame, isGameOver } = useGameState();
+export type GameMode = "pvp" | "pva";
+
+interface GameControlsProps {
+  gameMode?: GameMode;
+}
+
+export function GameControls({ gameMode = "pva" }: GameControlsProps) {
+  const { undoMove, resetGame, isGameOver, history, turn } = useGameState();
 
   const handleUndo = () => {
-    undoMove();
-    undoMove(); // Undo both player and AI move
+    if (gameMode === "pva") {
+      // In PvA mode, undo both player and AI moves to get back to player's turn
+      undoMove(); // Undo AI move
+      undoMove(); // Undo player move
+    } else {
+      // In PvP mode, just undo the last move
+      undoMove();
+    }
   };
+
+  // Can only undo if there are moves to undo
+  // In PvA mode, can only undo if it's player's turn (white) and there's at least 2 moves
+  // In PvP mode, can undo if there's at least 1 move
+  const canUndo = gameMode === "pva" 
+    ? history.length >= 2 && turn === "w"
+    : history.length >= 1;
 
   return (
     <div className="panel">
@@ -27,7 +46,8 @@ export function GameControls() {
           <button 
             className="btn btn-secondary"
             onClick={handleUndo}
-            disabled={isGameOver}
+            disabled={!canUndo || isGameOver}
+            title={gameMode === "pva" ? "Undo last move (and AI response)" : "Undo last move"}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />

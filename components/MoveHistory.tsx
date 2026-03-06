@@ -1,10 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useGameState } from "@/lib/game-state";
 
 export function MoveHistory() {
   const { history } = useGameState();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when new moves are added
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [history]);
 
   // Group moves into pairs (white and black)
   const movePairs: { moveNumber: number; white?: string; black?: string }[] = [];
@@ -28,7 +36,10 @@ export function MoveHistory() {
         </div>
       </div>
       <div className="panel-content flex-1 overflow-hidden">
-        <div className="move-history h-full overflow-y-auto">
+        <div 
+          ref={scrollRef}
+          className="move-history h-full overflow-y-auto"
+        >
           {movePairs.length === 0 ? (
             <div className="text-[var(--color-text-muted)] text-sm text-center py-4">
               No moves yet

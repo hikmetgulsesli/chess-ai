@@ -1,0 +1,5 @@
+STATUS: done
+STORY_BRANCH: 80dd00a0-US-006
+PR_URL: https://github.com/hikmetgulsesli/chess-ai/pull/5
+CHANGES: Added GameOverModal component with winner announcement, checkmate/stalemate/draw detection, red king highlight for check, disabled board interactions when game over
+TESTS: No new tests (no test runner configured)
